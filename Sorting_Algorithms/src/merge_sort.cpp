@@ -1,4 +1,4 @@
-#include "include/merge_sort.h"
+#include "merge_sort.h"
 
 void merge_sort(int tab[],int size) {
     devide(tab,0,size-1);
@@ -46,4 +46,3 @@ void merge(int tab[],int left, int middle, int right) {
     }
 
 }
-//1 2 3 4 5 6 7 8 9 10
