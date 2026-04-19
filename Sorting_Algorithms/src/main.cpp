@@ -1,58 +1,73 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <algorithm>
+#include <numeric>
+#include <chrono>
+#include "MovieRating.h"
 #include "merge_sort.h"
 #include "quick_sort.h"
+#include "bucket_sort.h"
 
-struct Data
-{
-    int id;
-    std::string title;
-    int rating;
-};
-
+int badania(MovieRating tab[], int range);
 
 int main() {
-    std::ifstream filesize("data/projekt1_dane.csv", std::ios::ate | std::ios::binary);
+    std::string outFileName = "data/merge_sort_time.csv";
+    std::ofstream outFile(outFileName, std::ios::app);
     std::ifstream infile("data/projekt1_dane.csv");
-    if(!filesize) {
+    if(!infile) {
         std::cout << "Blad otwarcia pliku\n";
         return 1;
     }
-
-    std::streamoff pos = filesize.tellg();  // typ liczbowy
-    char c;
-    std::string line;
-
-    for(std::streamoff i = pos - 1; i >= 0; i--) {
-
-        filesize.seekg(i);
-        filesize.get(c);
-
-        if(c == '\n' && i != pos - 1)
-            break;
-
-        line = c + line;
-    }
-    std::string s1 = line.substr(0,line.find(","));
-    int size = std::stoi(s1);
-    size+=2; // id pomija dwie pierwsze linie bo nie maja id
-    Data* tab = new Data[size];
-    int k=0;
-    for(int i = 1 ; i < size ; i++) {
-        std::string s;
-        getline(infile,s);
-        std::string temp = s.substr(0,s.find(","));
-        std::string temp2 ="";
-        if(s.size()- s.rfind(",")+1 > 1) temp2 = s.substr(s.rfind(","),s.size()-s.rfind(","));
-        std::string temp3 = s.substr(s.find(","+1,s.rfind(",")));
-        if(temp2[temp2.size()-1] == '0' && temp2.size() >= 2) {
-            std::string temp4 = s.substr(s.rfind(",")+1,s.size()-s.rfind(","));
-            tab[k].id = std::stoi(temp);
-            tab[k].rating = std::stoi(temp4);
-            tab[k].title = temp3;
-            k++;
+    int k = 0;
+    MovieRating* tab = new MovieRating[962903];
+    std::string temp;
+    getline(infile,temp);
+    for(int i = 0 ; i < 1010294 ; i++) {
+        std::string l;
+        getline(infile,l);
+        if (!l.empty() && l.back() == '\r') {
+            l.pop_back();
         }
+        std::string temp1 = l.substr(0,l.find(","));
+        std::string temp2 = l.substr(l.find(",")+1, l.rfind(",")-l.find(",")-1);
+        std::string temp3 ="";
+        if(l.rfind(",") == l.size()-1) {
+            continue;
+        }
+        temp3 = l.substr(l.rfind(",")+1,3);
+        tab[k] = MovieRating(std::stoi(temp1),temp2,std::stoi(temp3));
+        k++;
     }
+   
     std::cout<<"Loading Done: "<<k<<"\n";
+    for(int i = 0 ; i < 10 ; i++) {
+        std::cout<<"Badania do 10 000\n";
+        outFile << i << ";" << 10000 << ";" << badania(tab,10000) << "\n";
+        std::cout<<"Badania do 100 000\n";
+        outFile << i << ";" << 100000 << ";" << badania(tab,100000) << "\n";
+        std::cout<<"Badania do 500 000\n";
+        outFile << i << ";" << 500000 << ";" << badania(tab,500000) << "\n";
+        std::cout<<"Badania do maksymalnego rozmiaru: "<<k<<"\n";
+        outFile << i << ";" << k << ";" << badania(tab,k) << "\n";
+    }
+
+}
+
+int badania(MovieRating tab[], int range) {
+    MovieRating* tab2 = new MovieRating[range];
+    for(int i = 0 ; i < range ; i++) {
+        tab2[i] = tab[i];
+    }
+    auto start = std::chrono::high_resolution_clock::now();
+    merge_sort(tab2,range);
+    auto stop = std::chrono::high_resolution_clock::now();
+    auto czas = std::chrono::duration_cast<std::chrono::nanoseconds>(stop - start).count();
+    if(std::is_sorted(tab2,tab2+range)) {
+        std::cout<<"CORRECT\n";
+    }
+    else {
+        std::cout<<"INCORRECT\n";
+    }
+    return czas;
 }
