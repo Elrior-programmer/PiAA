@@ -34,11 +34,11 @@
 \maketitle
 
 \section{Wprowadzenie}
-Niniejszy projekt dotyczy analizy efektywności trzech algorytmów 
+Projekt dotyczy analizy efektywności trzech algorytmów 
 sortowania: sortowania przez scalanie (merge sort), sortowania szybkiego (quicksort) 
 oraz sortowania kubełkowego (bucket sort). 
 \subsubsection*{Sortowanie przez scalanie (Merge Sort)}
-Merge sort jest algorytmem opartym na paradygmacie „dziel i zwyciężaj". 
+Merge sort jest algorytmem opartym na „dziel i zwyciężaj". 
 Tablica wejściowa jest rekurencyjnie dzielona na dwie równe połowy aż do uzyskania
 tablic jednoelementowych, które są z definicji posortowane. Następnie podtablice 
 są scalane parami w sposób zachowujący porządek elementów.
@@ -53,7 +53,7 @@ Optymistyczny & O(n log n) \\ \hline
 \end{table}
 
 \subsubsection*{Sortowanie szybkie (Quicksort)}
-Quicksort również wykorzystuje paradygmat „dziel i zwyciężaj". 
+Quicksort również wykorzystuje „dziel i zwyciężaj". 
 Wybierany jest element osiowy (pivot), względem którego tablica jest dzielona
 na dwie części: elementy mniejsze od pivota i elementy większe lub równe. 
 Proces jest następnie rekurencyjnie powtarzany dla obu podtablic. W implementacji użyto 
@@ -93,9 +93,9 @@ zakresu 0–10. Dane wczytano z pliku CSV, pomijając wpisy z pustym
 polem oceny. Łącznie załadowano 962 903 rekordów.
 
 \subsubsection*{Struktury danych}
-Każdy rekord reprezentowany był przez obiekt klasy 
-MovieRating zawierający identyfikator filmu, tytuł 
-oraz ocenę (pole rating typu całkowitego).
+Każdy rekord reprezentowany był przez obiekt
+MovieRating zawierający id filmu, tytuł 
+oraz ocenę.
 
 \subsubsection*{Procedura pomiarowa}
 Dla każdego algorytmu i każdego rozmiaru danych wykonano 
@@ -131,14 +131,13 @@ Dla każdego pomiaru rejestrowano:
 
 Weryfikacja poprawności zaimplementowanych algorytmów przeprowadzana była 
 automatycznie po każdym wykonaniu sortowania. 
-Wykorzystano w tym celu funkcję standardowej biblioteki 
-C++ std::is\_sorted, która sprawdza czy elementy tablicy 
+Wykorzystano w tym celu funkcję is\_sorted, która sprawdza czy elementy tablicy 
 są ułożone w porządku niemalejącym:
 
 
 \subsubsection*{Stanowisko badawcze}
 Eksperymenty przeprowadzono na komputerze wyposażonym w procesor 
-Intel Core i5-620 (architektura 64-bitowa) oraz 8~GB pamięci RAM DDR3 
+Intel Core i5-620 oraz 8~GB pamięci RAM DDR3 
 taktowanej z częstotliwością 1600~MT/s. System operacyjny to 
 Kali GNU/Linux 2026.1. Kod źródłowy skompilowano kompilatorem 
 g++ w wersji 15.2.0-15.

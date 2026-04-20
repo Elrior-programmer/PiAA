@@ -6,7 +6,7 @@ void bucket_sort(MovieRating tab[],int range) {
     for(int i = 0 ; i < range ; i++) {
         stab[tab[i].rating]++;
     }
-    MovieRating** buckets = new MovieRating*[10];
+    MovieRating** buckets = new MovieRating*[11];
     for(int i = 0; i < 11; ++i) {
         buckets[i] = new MovieRating[stab[i]];
     }
@@ -21,7 +21,7 @@ void bucket_sort(MovieRating tab[],int range) {
         }
     }
 
-    for(int i = 0; i < 10; ++i) {
+    for(int i = 0; i < 11; ++i) {
         delete[] buckets[i]; 
     }
     delete[] buckets;
