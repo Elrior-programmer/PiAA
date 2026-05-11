@@ -22,9 +22,9 @@ std::vector<int> dijkstra(const Graph& g, int src) {
  
         for (const Edge& e : g.getNeighbors(u)) {
             int newDist = dist[u] + e.weight;
-            if (newDist < dist[e.to]) {
-                dist[e.to] = newDist;
-                pq.push({newDist, e.to});
+            if (newDist < dist[e.vertex]) {
+                dist[e.vertex] = newDist;
+                pq.push({newDist, e.vertex});
             }
         }
     }

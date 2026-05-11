@@ -5,7 +5,7 @@
 #include <stdexcept>
  
 struct Edge {
-    int to;
+    int vertex;
     int weight;
 };
 
